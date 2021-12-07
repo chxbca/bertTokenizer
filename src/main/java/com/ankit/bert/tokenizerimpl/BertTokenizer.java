@@ -151,4 +151,16 @@ public class BertTokenizer implements Tokenizer {
     public int vocabSize() {
         return tokenIdMap.size();
     }
+
+    public List<Integer> convertTokensToMasks(List<Integer> tokenize) {
+        List<Integer> resultMask = new ArrayList<>(tokenize);
+        for (int i = 0, resultMaskSize = resultMask.size(); i < resultMaskSize; i++) {
+            Integer token = resultMask.get(i);
+            if (token == 0) {
+                return resultMask;
+            }
+            resultMask.set(i, 1);
+        }
+        return resultMask;
+    }
 }

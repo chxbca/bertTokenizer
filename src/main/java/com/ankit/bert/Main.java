@@ -10,7 +10,10 @@ public class Main {
         String text = "所有的数据在存储和运算时都要使用二进制数表示";
         List<String> tokenize = bertTokenizer.tokenize(text);
         List<Integer> tokensToIds = bertTokenizer.convertTokensToIds(tokenize);
+        List<Integer> tokensToMasks = bertTokenizer.convertTokensToMasks(tokensToIds);
         System.out.println(tokenize);
         System.out.println(tokensToIds);
+        System.out.println(tokensToMasks);
     }
+
 }

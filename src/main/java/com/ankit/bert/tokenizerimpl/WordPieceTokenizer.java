@@ -53,23 +53,23 @@ public class WordPieceTokenizer implements Tokenizer {
             List<String> subTokens = new ArrayList<>();
             while (start < token.length()) {
                 int end = token.length();
-                String curSubstr = "";
+                String curSubStr = "";
                 while (start < end) {
                     String substr = token.substring(start, end);
                     if (start > 0) {
                         substr = "##" + substr;
                     }
                     if (vocab.containsKey(substr)) {
-                        curSubstr = substr;
+                        curSubStr = substr;
                         break;
                     }
                     end -= 1;
                 }
-                if (curSubstr.isEmpty()) {
+                if (curSubStr.isEmpty()) {
                     isBad = true;
                     break;
                 }
-                subTokens.add(curSubstr);
+                subTokens.add(curSubStr);
                 start = end;
             }
             if (isBad) {
