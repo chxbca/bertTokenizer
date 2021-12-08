@@ -7,26 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasicTokenizer implements Tokenizer {
-    private final boolean doLowerCase;
-    private final boolean tokenizeChineseChars;
+    private final boolean isDoLowerCase;
+    private final boolean isTokenizeChineseChars;
     private final List<String> neverSplit = new ArrayList<>();
 
-    public BasicTokenizer(boolean doLowerCase, boolean tokenizeChineseChars) {
-        this.doLowerCase = doLowerCase;
-        this.tokenizeChineseChars = tokenizeChineseChars;
+    public BasicTokenizer(boolean isDoLowerCase, boolean isTokenizeChineseChars) {
+        this.isDoLowerCase = isDoLowerCase;
+        this.isTokenizeChineseChars = isTokenizeChineseChars;
     }
 
     @Override
     public List<String> tokenize(String text) {
         text = TokenizerUtils.cleanText(text);
-        if (tokenizeChineseChars) {
+        if (isTokenizeChineseChars) {
             text = TokenizerUtils.tokenizeChineseChars(text);
         }
         List<String> origTokens = TokenizerUtils.whitespaceTokenize(text);
 
         List<String> splitTokens = new ArrayList<>();
         for (String token : origTokens) {
-            if (doLowerCase && !neverSplit.contains(token)) {
+            if (isDoLowerCase && !neverSplit.contains(token)) {
                 token = TokenizerUtils.runStripAccents(token.toLowerCase());
                 splitTokens.addAll(TokenizerUtils.runSplitOnPunc(token, neverSplit));
             }

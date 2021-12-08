@@ -36,9 +36,7 @@ public class TokenizerUtils {
             Character c = text.charAt(i);
             int cp = (int) c;
             if (isChineseChar(cp)) {
-                output.append(" ");
-                output.append(c);
-                output.append(" ");
+                output.append(" ").append(c).append(" ");
             } else {
                 output.append(c);
             }
@@ -60,7 +58,7 @@ public class TokenizerUtils {
         token = Normalizer.normalize(token, Form.NFD);
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < token.length(); i++) {
-            Character c = token.charAt(i);
+            char c = token.charAt(i);
             if (Character.NON_SPACING_MARK != Character.getType(c)) {
                 output.append(c);
             }

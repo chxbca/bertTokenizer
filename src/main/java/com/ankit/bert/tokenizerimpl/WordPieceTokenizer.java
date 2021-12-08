@@ -19,9 +19,7 @@ public class WordPieceTokenizer implements Tokenizer {
     }
 
     public WordPieceTokenizer(Map<String, Integer> vocab, String unkToken) {
-        this.vocab = vocab;
-        this.unkToken = unkToken;
-        this.maxInputCharsPerWord = 100;
+        this(vocab, unkToken, 100);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class WordPieceTokenizer implements Tokenizer {
           Args: text: A single token or whitespace separated tokens. This should have
           already been passed through `BasicTokenizer`.
 
-          Returns: A list of wordpiece tokens.
+          Returns: A list of word piece tokens.
 
          */
 
@@ -55,15 +53,15 @@ public class WordPieceTokenizer implements Tokenizer {
                 int end = token.length();
                 String curSubStr = "";
                 while (start < end) {
-                    String substr = token.substring(start, end);
+                    String subStr = token.substring(start, end);
                     if (start > 0) {
-                        substr = "##" + substr;
+                        subStr = "##" + subStr;
                     }
-                    if (vocab.containsKey(substr)) {
-                        curSubStr = substr;
+                    if (vocab.containsKey(subStr)) {
+                        curSubStr = subStr;
                         break;
                     }
-                    end -= 1;
+                    end--;
                 }
                 if (curSubStr.isEmpty()) {
                     isBad = true;

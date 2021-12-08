@@ -77,7 +77,7 @@ public class BertTokenizer implements Tokenizer {
     private final String maskToken = "[MASK]";
     private final boolean tokenizeChineseChars = true;
     private BasicTokenizer basicTokenizer;
-    private WordPieceTokenizer wordpieceTokenizer;
+    private WordPieceTokenizer wordPieceTokenizer;
 
     private static final int MAXLEN = 512;
 
@@ -100,7 +100,7 @@ public class BertTokenizer implements Tokenizer {
         if (doBasicTokenize) {
             this.basicTokenizer = new BasicTokenizer(doLowerCase, tokenizeChineseChars);
         }
-        this.wordpieceTokenizer = new WordPieceTokenizer(tokenIdMap, unkToken);
+        this.wordPieceTokenizer = new WordPieceTokenizer(tokenIdMap, unkToken);
     }
 
     private Map<String, Integer> loadVocab(String vocabFileName) throws IOException {
@@ -127,10 +127,10 @@ public class BertTokenizer implements Tokenizer {
         List<String> splitTokens = new ArrayList<>();
         if (doBasicTokenize) {
             for (String token : basicTokenizer.tokenize(text)) {
-                splitTokens.addAll(wordpieceTokenizer.tokenize(token));
+                splitTokens.addAll(wordPieceTokenizer.tokenize(token));
             }
         } else {
-            splitTokens = wordpieceTokenizer.tokenize(text);
+            splitTokens = wordPieceTokenizer.tokenize(text);
         }
         return splitTokens;
     }
