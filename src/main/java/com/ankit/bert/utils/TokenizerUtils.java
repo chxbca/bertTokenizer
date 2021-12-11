@@ -10,21 +10,17 @@ import java.util.*;
 
 public class TokenizerUtils {
 
+    private static final String WHITE_SPACE = " ";
+
     public static String cleanText(String text) {
         // Performs invalid character removal and whitespace cleanup on text."""
-
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            Character c = text.charAt(i);
-            int cp = (int) c;
-            if (cp == 0 || cp == 0xFFFD || isControl(c)) {
+            char c = text.charAt(i);
+            if (c == 0 || c == 0xFFFD || isControl(c)) {
                 continue;
             }
-            if (isWhitespace(c)) {
-                output.append(" ");
-            } else {
-                output.append(c);
-            }
+            output.append(isWhitespace(c) ? WHITE_SPACE : c);
         }
         return output.toString();
     }
@@ -33,10 +29,9 @@ public class TokenizerUtils {
         // Adds whitespace around any CJK character.
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            Character c = text.charAt(i);
-            int cp = (int) c;
-            if (isChineseChar(cp)) {
-                output.append(" ").append(c).append(" ");
+            char c = text.charAt(i);
+            if (isChineseChar(c)) {
+                output.append(WHITE_SPACE).append(c).append(WHITE_SPACE);
             } else {
                 output.append(c);
             }
@@ -124,10 +119,10 @@ public class TokenizerUtils {
         // Characters such as "^", "$", and "`" are not in the Unicode
         // Punctuation class but we treat them as punctuation anyways, for
         // consistency.
-        boolean isPunctuation = ((int) c >= 33 && (int) c <= 47) ||
-                ((int) c >= 58 && (int) c <= 64) ||
-                ((int) c >= 91 && (int) c <= 96) ||
-                ((int) c >= 123 && (int) c <= 126);
+        boolean isPunctuation = (c >= 33 && c <= 47) ||
+                (c >= 58 && c <= 64) ||
+                (c >= 91 && c <= 96) ||
+                (c >= 123 && c <= 126);
         if (isPunctuation) {
             return true;
         }
